@@ -1,0 +1,7 @@
+{
+  "name": "B&B_Advisor",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
