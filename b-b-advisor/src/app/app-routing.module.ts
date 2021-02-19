@@ -12,6 +12,18 @@ const routes: Routes = [
     redirectTo: 'main',
     pathMatch: 'full',
   },
+  {
+    path: 'authentication',
+    loadChildren: () => import('./authentication/authentication.module').then( m => m.AuthenticationPageModule)
+  },
+  {
+    path: 'places',
+    loadChildren: () => import('./places/places.module').then( m => m.PlacesPageModule)
+  },
+  {
+    path: 'bookings',
+    loadChildren: () => import('./bookings/bookings.module').then( m => m.BookingsPageModule)
+  },
 ];
 
 @NgModule({
