@@ -74,6 +74,13 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  // custom
+  --custom-persimmon-orange: #ec5800;
+  --custom-anti-flash-grey : #f2f3f4;
+  --custom-denim-blue : #1560bd;
+  --custom-oxford-blue: #002147;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -153,7 +160,7 @@
    */
 
   .ios body {
-    --ion-background-color: #000000;
+    --ion-background-color: var(--custom-anti-flash-grey);
     --ion-background-color-rgb: 0,0,0;
 
     --ion-text-color: #ffffff;
