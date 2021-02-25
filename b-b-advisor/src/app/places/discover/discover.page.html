@@ -32,18 +32,26 @@
       </ion-col>
 
       <ion-col size="12" size.sm="8" class="ion-text-center">
-        <ion-virtual-scroll [items]="slicedplaces" approxItemHeight="50px">
-          <ion-item *virtualItem="let place" [routerLink]="['/', 'places','discover', place.id ]">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="place.imageUrl"></ion-img>
-            </ion-thumbnail>
-            <ion-label>
-              <h2>{{place.title}}</h2>
-              <p>{{place.price | currency}}</p>
-            </ion-label>
+        <ng-container *ngIf="isDataLoaded; else skeletonText">
+          <ion-virtual-scroll [items]="slicedplaces" approxItemHeight="50px">
+            <ion-item *virtualItem="let place" [routerLink]="['/', 'places','discover', place.id ]">
+              <ion-thumbnail slot="start">
+                <ion-img [src]="place.imageUrl"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                <h2>{{place.title}}</h2>
+                <p>{{place.price | currency}}</p>
+              </ion-label>
 
-          </ion-item>
-        </ion-virtual-scroll>
+            </ion-item>
+          </ion-virtual-scroll>
+        </ng-container>
+        <ng-template #skeletonText>
+          <ion-list *ngFor="let placeholder of placeholders">
+            <app-skeleton-text></app-skeleton-text>
+          </ion-list>
+        </ng-template>
+
       </ion-col>
 
     </ion-row>

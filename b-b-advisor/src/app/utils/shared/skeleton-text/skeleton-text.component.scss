@@ -1,0 +1,26 @@
+// ::ng-deep app-skeleton-placeholder {
+//   width: 100%;
+// }
+
+// ion-card {
+//   margin: 16px;
+// }
+
+// ion-thumbnail {
+//   height: 100%;
+//   width: 100%;
+//   padding: 0px 30px;
+// }
+
+// .imageBox {
+//   height: 100px;
+// }
+
+/* Custom Skeleton Line Height and Margin */
+.custom-skeleton ion-skeleton-text {
+  line-height: 13px;
+}
+
+.custom-skeleton ion-skeleton-text:last-child {
+  margin-bottom: 5px;
+}
