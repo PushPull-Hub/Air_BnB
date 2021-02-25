@@ -9,9 +9,11 @@ import { PlaceService } from 'src/app/utils/services/place.service';
 })
 export class DiscoverPage implements OnInit {
   places: Place[];
+  slicedplaces: Place[];
   constructor(private placesService: PlaceService) {}
 
   ngOnInit() {
     this.places = this.placesService.getPlaces();
+    this.slicedplaces = [...this.places.slice(1)];
   }
 }
