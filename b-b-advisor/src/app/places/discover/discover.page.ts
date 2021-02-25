@@ -8,12 +8,20 @@ import { PlaceService } from 'src/app/utils/services/place.service';
   styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit {
-  places: Place[];
-  slicedplaces: Place[];
+  places: Place[] = [];
+  slicedplaces: Place[] = [];
+  placeholders: number[] = [1, 2, 3];
+  isDataLoaded: boolean;
+
   constructor(private placesService: PlaceService) {}
 
   ngOnInit() {
     this.places = this.placesService.getPlaces();
-    this.slicedplaces = [...this.places.slice(1)];
+    setTimeout(() => {
+      this.slicedplaces = [...this.places.slice(1)];
+      this.isDataLoaded = true;
+    }, 1000);
   }
+
+  ionViewWillEnter() {}
 }
