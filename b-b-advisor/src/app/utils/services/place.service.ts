@@ -21,10 +21,52 @@ export class PlaceService {
       189.99
     ),
     new Place(
-      '10',
-      'The Foggy Palace',
+      '12',
+      'The Peninsula Chicago',
       'Not your average city trip!',
       'assets/images/hotel_3.jpg',
+      99.99
+    ),
+    new Place(
+      '13',
+      'Marriott.',
+      'Start with the customer in mind.',
+      'assets/images/hotel_4.jpg',
+      59.99
+    ),
+    new Place(
+      '14',
+      'Ritz-Carlton Hotel.',
+      'Promise authentic hospitality',
+      'assets/images/hotel_5.jpg',
+      300.0
+    ),
+    new Place(
+      '15',
+      'Waldorf Astoria Hotels',
+      'Tower Club Lounge',
+      'assets/images/hotel_6.jpg',
+      140.0
+    ),
+    new Place(
+      '16',
+      'The Luxury Collection',
+      'Unrivalled facilites and amenities',
+      'assets/images/hotel_7.jpg',
+      70.0
+    ),
+    new Place(
+      '17',
+      'Malibu',
+      'made with Amore <3 ',
+      'assets/images/hotel_8.jpg',
+      120.0
+    ),
+    new Place(
+      '18',
+      'Breeze Blows',
+      'Not your average city trip!',
+      'assets/images/hotel_9.jpg',
       99.99
     ),
   ];
