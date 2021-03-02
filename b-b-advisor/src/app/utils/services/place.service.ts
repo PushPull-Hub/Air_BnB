@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Place } from '../models/Place.model';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -74,7 +75,16 @@ export class PlaceService {
 
   constructor() {}
 
-  getPlaces() {
+  get places() {
     return this._places.asObservable();
+  }
+
+  getPlaceById(placeId: string) {
+    return this.places.pipe(
+      take(1),
+      map((places) => {
+        return { ...places.find((p) => p.id === placeId) };
+      })
+    );
   }
 }
