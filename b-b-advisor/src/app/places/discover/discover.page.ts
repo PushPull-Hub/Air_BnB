@@ -19,7 +19,11 @@ export class DiscoverPage implements OnInit, OnDestroy {
   constructor(private placesService: PlaceService) {}
 
   ngOnInit() {
-    this.placesService.getPlaces().subscribe((places: Place[]) => {
+    this.fetchPlacesDataSubscription = this.fetchPlaces();
+  }
+
+  private fetchPlaces() {
+    return this.placesService.places.subscribe((places: Place[]) => {
       this.places = places;
       setTimeout(() => {
         this.slicedplaces = [...this.places.slice(1)];
@@ -29,8 +33,6 @@ export class DiscoverPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.fetchPlacesDataSubscription) {
-      this.fetchPlacesDataSubscription.unsubscribe();
-    }
+    this.fetchPlacesDataSubscription.unsubscribe();
   }
 }
