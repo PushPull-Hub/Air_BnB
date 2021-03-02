@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Place } from '../models/Place.model';
 import { map, take } from 'rxjs/operators';
 
@@ -75,11 +75,11 @@ export class PlaceService {
 
   constructor() {}
 
-  get places() {
+  get places(): Observable<Place[]> {
     return this._places.asObservable();
   }
 
-  getPlaceById(placeId: string) {
+  getPlaceById(placeId: string): Observable<Place> {
     return this.places.pipe(
       take(1),
       map((places) => {
