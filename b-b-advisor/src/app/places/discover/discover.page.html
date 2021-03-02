@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon name="reorder-four-outline"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Discover</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+
+      <ion-col size="12" size.sm="8" class="ion-text-center">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title> {{places[0].title}} </ion-card-title>
+            <ion-card-subtitle>
+              {{places[0].price | currency }} / {{ "Night" | lowercase }}
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-img [src]="places[0].imageUrl"></ion-img>
+          <ion-card-content> {{places[0].description}} </ion-card-content>
+          <div class="ion-text-right">
+            <ion-button fill="clear" color="primary" [routerLink]="['/', 'places','discover', places[0].id ]">
+              More
+            </ion-button>
+          </div>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size.sm="8" class="ion-text-center">
+        <ng-container *ngIf="isDataLoaded; else skeletonText">
+          <ion-virtual-scroll [items]="slicedplaces" approxItemHeight="50px">
+            <ion-item *virtualItem="let place" [routerLink]="['/', 'places','discover', place.id ]">
+              <ion-thumbnail slot="start">
+                <ion-img [src]="place.imageUrl"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                <h2>{{place.title}}</h2>
+                <p>{{place.price | currency}}</p>
+              </ion-label>
+
+            </ion-item>
+          </ion-virtual-scroll>
+        </ng-container>
+        <ng-template #skeletonText>
+          <ion-list *ngFor="let placeholder of placeholders">
+            <app-skeleton-text></app-skeleton-text>
+          </ion-list>
+        </ng-template>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>

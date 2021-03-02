@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor() {}
+
+  logOut() {
+    console.log('log out fired');
+  }
 }
