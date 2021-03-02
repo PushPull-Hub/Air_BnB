@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Place } from 'src/app/utils/models/Place.model';
 import { PlaceService } from 'src/app/utils/services/place.service';
 
@@ -7,21 +8,29 @@ import { PlaceService } from 'src/app/utils/services/place.service';
   templateUrl: './discover.page.html',
   styleUrls: ['./discover.page.scss'],
 })
-export class DiscoverPage implements OnInit {
+export class DiscoverPage implements OnInit, OnDestroy {
   places: Place[] = [];
   slicedplaces: Place[] = [];
   placeholders: number[] = [1, 2, 3];
   isDataLoaded: boolean;
 
+  fetchPlacesDataSubscription: Subscription;
+
   constructor(private placesService: PlaceService) {}
 
   ngOnInit() {
-    this.places = this.placesService.getPlaces();
-    setTimeout(() => {
-      this.slicedplaces = [...this.places.slice(1)];
-      this.isDataLoaded = true;
-    }, 1000);
+    this.placesService.getPlaces().subscribe((places: Place[]) => {
+      this.places = places;
+      setTimeout(() => {
+        this.slicedplaces = [...this.places.slice(1)];
+        this.isDataLoaded = true;
+      }, 1000);
+    });
   }
 
-  ionViewWillEnter() {}
+  ngOnDestroy() {
+    if (this.fetchPlacesDataSubscription) {
+      this.fetchPlacesDataSubscription.unsubscribe();
+    }
+  }
 }
