@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Place } from '../models/Place.model';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlaceService {
-  private _places: Place[] = [
+  private _places: BehaviorSubject<Place[]> = new BehaviorSubject<Place[]>([
     new Place(
       '10',
       'Manhattan Mansion',
@@ -69,11 +71,20 @@ export class PlaceService {
       'assets/images/hotel_9.jpg',
       99.99
     ),
-  ];
+  ]);
 
   constructor() {}
 
-  getPlaces() {
-    return [...this._places];
+  get places(): Observable<Place[]> {
+    return this._places.asObservable();
+  }
+
+  getPlaceById(placeId: string): Observable<Place> {
+    return this.places.pipe(
+      take(1),
+      map((places) => {
+        return { ...places.find((p) => p.id === placeId) };
+      })
+    );
   }
 }
