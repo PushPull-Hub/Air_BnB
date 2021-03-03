@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Place } from 'src/app/utils/models/Place.model';
 import { PlaceService } from 'src/app/utils/services/place.service';
 
@@ -9,9 +10,11 @@ import { PlaceService } from 'src/app/utils/services/place.service';
   templateUrl: './edit-offer.page.html',
   styleUrls: ['./edit-offer.page.scss'],
 })
-export class EditOfferPage implements OnInit {
+export class EditOfferPage implements OnInit, OnDestroy {
   form: FormGroup;
   place: Place;
+
+  private loadPlaceSubscription: Subscription;
 
   constructor(
     private placeService: PlaceService,
@@ -30,7 +33,7 @@ export class EditOfferPage implements OnInit {
         return;
       }
 
-      this.placeService
+      this.loadPlaceSubscription = this.placeService
         .getPlaceById(paramMap.get('placeId'))
         .subscribe((place: Place) => {
           if (place) {
@@ -42,11 +45,16 @@ export class EditOfferPage implements OnInit {
               }),
               description: new FormControl(this.place.description, {
                 updateOn: 'blur',
-                validators: [Validators.required],
+                validators: [Validators.required, Validators.maxLength(180)],
               }),
             });
+            console.log(this.form);
           }
         });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.loadPlaceSubscription.unsubscribe();
   }
 }
