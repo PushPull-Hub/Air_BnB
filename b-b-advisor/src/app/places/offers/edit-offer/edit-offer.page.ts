@@ -13,7 +13,6 @@ import { PlaceService } from 'src/app/utils/services/place.service';
 export class EditOfferPage implements OnInit, OnDestroy {
   form: FormGroup;
   place: Place;
-
   private loadPlaceSubscription: Subscription;
 
   constructor(
@@ -48,7 +47,6 @@ export class EditOfferPage implements OnInit, OnDestroy {
                 validators: [Validators.required, Validators.maxLength(180)],
               }),
             });
-            console.log(this.form);
           }
         });
     });
