@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Place } from '../models/Place.model';
-import { map, take } from 'rxjs/operators';
+import { delay, map, take, tap } from 'rxjs/operators';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -100,7 +101,7 @@ export class PlaceService {
     ),
   ]);
 
-  constructor() {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   get places(): Observable<Place[]> {
     return this._places.asObservable();
@@ -111,6 +112,32 @@ export class PlaceService {
       take(1),
       map((places) => {
         return { ...places.find((p) => p.id === placeId) };
+      })
+    );
+  }
+
+  addPlace(
+    title: string,
+    description: string,
+    price: number,
+    dateFrom: Date,
+    dateTo: Date
+  ) {
+    const newPlace = new Place(
+      Math.random().toString(),
+      title,
+      description,
+      'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200',
+      price,
+      dateFrom,
+      dateTo,
+      this.authenticationService.userId
+    );
+    return this.places.pipe(
+      take(1),
+      delay(1000),
+      tap((places) => {
+        this._places.next(places.concat(newPlace));
       })
     );
   }
