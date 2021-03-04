@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { Place } from 'src/app/utils/models/Place.model';
 import { PlaceService } from 'src/app/utils/services/place.service';
 
@@ -9,8 +10,9 @@ import { PlaceService } from 'src/app/utils/services/place.service';
   templateUrl: './place-detail.page.html',
   styleUrls: ['./place-detail.page.scss'],
 })
-export class PlaceDetailPage implements OnInit {
+export class PlaceDetailPage implements OnInit, OnDestroy {
   place: Place;
+  loadPlaceSubscription: Subscription;
 
   constructor(
     private placeService: PlaceService,
@@ -28,7 +30,7 @@ export class PlaceDetailPage implements OnInit {
         this.navController.navigateBack('/places/discover');
         return;
       }
-      this.placeService
+      this.loadPlaceSubscription = this.placeService
         .getPlaceById(paramMap.get('placeId'))
         .subscribe((place: Place) => {
           if (place && place.id) {
@@ -38,5 +40,9 @@ export class PlaceDetailPage implements OnInit {
           }
         });
     });
+  }
+
+  ngOnDestroy() {
+    this.loadPlaceSubscription.unsubscribe();
   }
 }
