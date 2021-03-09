@@ -11,7 +11,7 @@ import { Place } from 'src/app/utils/models/Place.model';
 export class CreateBookingComponent implements OnInit {
   @Input() selectedPlace: Place;
   @Input() selectedMode: 'select' | 'random';
-  @ViewChild('f') form: NgForm;
+  @ViewChild('f', { static: true }) form: NgForm;
   startDate: string;
   endDate: string;
 
@@ -39,11 +39,11 @@ export class CreateBookingComponent implements OnInit {
     }
   }
 
-  Cancel() {
+  cancel() {
     this.modalController.dismiss(null, 'cancel');
   }
 
-  BookPlace() {
+  bookPlace() {
     if (!this.form.valid || !this.datesValid) {
       return;
     }
