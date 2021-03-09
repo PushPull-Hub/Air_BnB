@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Place } from 'src/app/utils/models/Place.model';
 import { PlaceService } from 'src/app/utils/services/place.service';
@@ -10,15 +11,15 @@ import { PlaceService } from 'src/app/utils/services/place.service';
   templateUrl: './edit-offer.page.html',
   styleUrls: ['./edit-offer.page.scss'],
 })
-export class EditOfferPage implements OnInit, OnDestroy {
+export class EditOfferPage implements OnInit {
   form: FormGroup;
   place: Place;
   private loadPlaceSubscription: Subscription;
-
   constructor(
     private placeService: PlaceService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -50,6 +51,30 @@ export class EditOfferPage implements OnInit, OnDestroy {
           }
         });
     });
+  }
+
+  updateOffer() {
+    if (!this.form.valid) {
+      return;
+    }
+    this.loadingController
+      .create({
+        message: 'Updating place...',
+      })
+      .then((loadingEl) => {
+        loadingEl.present();
+        this.placeService
+          .updatePlace(
+            this.place.id,
+            this.form.value.title,
+            this.form.value.description
+          )
+          .subscribe(() => {
+            loadingEl.dismiss();
+            this.form.reset();
+            this.router.navigate(['/places/offers']);
+          });
+      });
   }
 
   ngOnDestroy(): void {
