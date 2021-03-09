@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+import { AuthenticationService } from './utils/services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +8,22 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private loadingController: LoadingController
+  ) {}
 
   logOut() {
-    console.log('log out fired');
+    this.loadingController
+      .create({
+        message: 'Logging Out ...',
+      })
+      .then((loadingControllerElement) => {
+        loadingControllerElement.present();
+        setTimeout(() => {
+          this.authenticationService.logout();
+          loadingControllerElement.dismiss();
+        }, 800);
+      });
   }
 }
