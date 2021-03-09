@@ -31,7 +31,7 @@ export class AuthenticationPage implements OnInit {
         setTimeout(() => {
           this.isLoading = false;
           loadingEl.dismiss();
-          this.router.navigateByUrl('/places/tabs/discover');
+          this.router.navigateByUrl('/places/discover');
         }, 1500);
       });
   }
