@@ -9,6 +9,7 @@ import {
 import { Subscription } from 'rxjs';
 import { CreateBookingComponent } from 'src/app/bookings/create-booking/create-booking.component';
 import { Place } from 'src/app/utils/models/Place.model';
+import { AuthenticationService } from 'src/app/utils/services/authentication.service';
 import { BookingService } from 'src/app/utils/services/booking.service';
 import { PlaceService } from 'src/app/utils/services/place.service';
 
@@ -26,6 +27,7 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
   constructor(
     private placeService: PlaceService,
     private bookingService: BookingService,
+    private authenticationService: AuthenticationService,
     private navController: NavController,
     private activatedRoute: ActivatedRoute,
     private actionSheetController: ActionSheetController,
@@ -49,6 +51,8 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
         .subscribe((place: Place) => {
           if (place && place.id) {
             this.place = place;
+            this.isBookable =
+              place.userId !== this.authenticationService.userId;
           } else {
             this.navController.navigateBack('/places/discover');
           }
@@ -112,6 +116,8 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
                 )
                 .subscribe(() => {
                   loadingElement.dismiss();
+                  this.isBookable = false;
+                  this.navController.navigateBack('/bookings');
                 });
             });
         }
