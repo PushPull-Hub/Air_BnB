@@ -21,7 +21,13 @@ export class AuthenticationPage implements OnInit {
 
   ngOnInit() {}
 
-  onLogin() {
+  logIn(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+    const email = form.value.email;
+    const password = form.value.password;
+    console.log(email, password);
     this.isLoading = true;
     this.authService.login();
     this.loadingCtrl
@@ -31,6 +37,7 @@ export class AuthenticationPage implements OnInit {
         setTimeout(() => {
           this.isLoading = false;
           loadingEl.dismiss();
+          form.resetForm();
           this.router.navigateByUrl('/places/discover');
         }, 1500);
       });
@@ -38,20 +45,5 @@ export class AuthenticationPage implements OnInit {
 
   onSwitchAuthMode() {
     this.isLogin = !this.isLogin;
-  }
-
-  onSubmit(form: NgForm) {
-    if (!form.valid) {
-      return;
-    }
-    const email = form.value.email;
-    const password = form.value.password;
-    console.log(email, password);
-
-    if (this.isLogin) {
-      // Send a request to login servers
-    } else {
-      // Send a request to signup servers
-    }
   }
 }
