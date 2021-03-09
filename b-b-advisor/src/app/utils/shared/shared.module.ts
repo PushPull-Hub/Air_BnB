@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { IonicModule } from '@ionic/angular';
+
 import { SkeletonTextComponent } from './skeleton-text/skeleton-text.component';
 
 @NgModule({
   declarations: [SkeletonTextComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, IonicModule],
   exports: [SkeletonTextComponent],
 })
 export class SharedModule {}

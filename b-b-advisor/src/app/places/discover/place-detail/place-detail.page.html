@@ -3,8 +3,44 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/places/discover"></ion-back-button>
     </ion-buttons>
-    <ion-title>Place Detail</ion-title>
+    <ion-title>{{ place.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-img [src]="place.imageUrl"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-padding ion-text-center">
+        <p>{{ place.description }}</p>
+        <ion-button *ngIf="!isBookable" color=" light">
+          <ion-label color="dark" class="ion-float-right">Booked</ion-label>
+          <ion-icon name="checkmark-done-outline" color="success"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer no-shadow>
+  <ng-container *ngIf="isBookable; else booked">
+    <ion-button class="ion-margin" color="primary" expand="block" (click)="bookPlace()">Book</ion-button>
+  </ng-container>
+  <ng-template #booked>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <ion-button color="dark" expand="block">
+            <ion-label>check my bookings</ion-label>
+            <ion-icon name="arrow-forward-circle-outline" color="success"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+
+</ion-footer>
