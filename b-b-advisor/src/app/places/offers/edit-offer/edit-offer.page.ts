@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Place } from 'src/app/utils/models/Place.model';
 import { PlaceService } from 'src/app/utils/services/place.service';
@@ -17,9 +17,9 @@ export class EditOfferPage implements OnInit {
   private loadPlaceSubscription: Subscription;
   constructor(
     private placeService: PlaceService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private navController: NavController
   ) {}
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class EditOfferPage implements OnInit {
   private loadPlaceInformations() {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (!paramMap.has('placeId')) {
-        this.router.navigate['places/offers'];
+        this.navController.navigateBack['places/offers'];
         return;
       }
 
@@ -72,7 +72,7 @@ export class EditOfferPage implements OnInit {
           .subscribe(() => {
             loadingEl.dismiss();
             this.form.reset();
-            this.router.navigate(['/places/offers']);
+            this.navController.navigateBack(['/places/offers']);
           });
       });
   }
