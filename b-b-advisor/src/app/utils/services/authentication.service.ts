@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private _userIsAuthenticated = false;
+  private _userIsAuthenticated = true;
   private _userId = '101';
 
   constructor(private navController: NavController) {}
